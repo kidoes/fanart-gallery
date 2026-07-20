@@ -49,6 +49,44 @@
         html {
             scrollbar-width: none !important; /* Firefox */
         }
+
+                /* ===== CHỈ FIX ĐÚNG 3 KHU VỰC BỊ LỖI TRÊN MOBILE (<= 768px) ===== */
+        @media (max-width: 768px) {
+            
+            /* 1. Sửa khung Nhân vật: Ép xếp dọc 1 cột thay vì tràn ngang */
+            .char-grid {
+                grid-template-columns: 1fr !important;
+                gap: 25px !important;
+            }
+            .char-card {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            /* 2. Sửa khung Số liệu: Thu nhỏ khoảng cách, cho phép tự co giãn đều màn hình */
+            .stats-section {
+                flex-direction: row !important; /* Giữ hàng ngang nhưng tự rớt dòng */
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 15px !important;
+            }
+            .stat-box {
+                width: calc(50% - 10px) !important; /* Chia đôi màn hình nằm cạnh nhau cho đẹp */
+                min-width: 140px !important;
+                padding: 15px 10px !important;
+            }
+
+            /* 3. Sửa Guestbook: Ép Form nhập và Tin nhắn xếp dọc nối đuôi nhau */
+            .guestbook-container {
+                flex-direction: column !important;
+                gap: 20px !important;
+            }
+            .guest-form, .guest-messages {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
     </style>
 </head>
 <body>
