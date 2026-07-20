@@ -13,21 +13,25 @@ body {
     position: relative;
 }
 
-/* KHUNG NỀN DI ĐỘNG KỸ THUẬT SỐ (CSS SCROLL PARALLAX) */
+/* KHUNG NỀN DI ĐỘNG KỸ THUẬT SỐ - ĐÃ TỐI ƯU CHỐNG LAG */
 .parallax-bg-layer {
-    position: absolute;
+    position: fixed; /* Đổi thành fixed để cố định nền, trượt chữ lên trên */
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100%;
-    background-image: url('bg.jpg'); /* File ảnh tàn tích của bồ */
+    height: 100vh;
+    background-image: url('bg.jpg');
     background-size: cover;
-    background-position: center top;
+    background-position: center;
     background-repeat: no-repeat;
     z-index: 0;
     pointer-events: none;
-    background-attachment: scroll;
-    animation: backgroundBreathe 12s ease-in-out infinite alternate;
+    
+    /* Tăng tốc phần cứng bằng card đồ họa của laptop/điện thoại */
+    will-change: transform;
+    transform: translateZ(0); 
+    
+    /* XÓA BỎ LỆNH ANIMATION THỞ GÂY LAG Ở ĐÂY NHA BỒ */
 }
 
 @keyframes backgroundBreathe {
