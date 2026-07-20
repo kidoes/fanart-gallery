@@ -20,9 +20,20 @@
             -webkit-overflow-scrolling: touch; 
         }
 
-        /* Loại bỏ sạch sẽ các thanh cuộn phụ gây bối rối tính toán khoảng đệm */
-        .cinema-slider, .museum-room {
-            overflow: visible !important;
+        /* 🟢 CHỈ SỬA KHÚC NÀY ĐỂ GIẤU PHÒNG TRIỂN LÃM ĐÚNG CÁCH: */
+        .cinema-slider {
+            display: flex;
+            width: 200vw;
+            max-width: 200vw;
+            transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+            overflow: hidden !important; /* Khóa tràn ngang ở slider chính để giấu phòng 2 đi */
+        }
+        
+        .museum-room {
+            width: 100vw;
+            max-width: 100vw;
+            flex-shrink: 0;
+            overflow: visible !important; /* Giữ nguyên dòng này để laptop cuộn chuột không bị chậm rùa */
         }
 
         /* Khóa chết đống thanh cuộn xám vô duyên trên Cốc Cốc, Chrome, Edge và Safari */
