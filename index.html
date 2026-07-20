@@ -11,12 +11,15 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- ================= RESPONSIVE / ANTI-OVERFLOW FIXES ================= -->
-    <style>
+<style>
         html, body {
             max-width: 100%;
             overflow-x: hidden;
             overflow-y: auto !important; /* Ép luôn cuộn dọc tự nhiên */
+            scrollbar-width: none !important; /* Ẩn thanh cuộn trên Firefox */
+            -ms-overflow-style: none !important; /* Ẩn thanh cuộn trên IE/Edge */
         }
+
         *, *::before, *::after {
             box-sizing: border-box;
         }
@@ -76,6 +79,8 @@
             .floating-chibi { transform: scale(0.7); right: 0; }
             .music-player-widget { transform: scale(0.85); }
         }
+    </style>
+
     </style>
 </head>
 <body>
