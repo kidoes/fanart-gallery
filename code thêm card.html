@@ -1,0 +1,100 @@
+<!-- 🧪 TEST THỬ: Muốn kiểm tra trạng thái có tranh, bồ chỉ cần BỎ DẤU ẨN BÌNH LUẬN (Uncomment) cụm card dưới đây: -->
+                    <!-- 
+                    <div class="memory-card" onclick="toggleMemoryPanel(this)">
+                        <div class="cyber-corner top-left"></div>
+                        <div class="cyber-corner top-right"></div>
+                        <div class="cyber-corner bottom-left"></div>
+                        <div class="cyber-corner bottom-right"></div>
+                        <div class="art-frame-wrapper">
+                            <img src="profile.jpg" alt="Preserved Fanart" class="museum-art">
+                            <div class="light-scan-bar"></div>
+                        </div>
+                        <div class="memory-info-panel glass-panel">
+                            <span class="system-tag"><i class="fas fa-seedling"></i> Gift From</span>
+                            <h4 class="artist-handle">@ArtistName</h4>
+                            <p class="artist-message">"This artwork is a fragment of a memory from the deep forest. Thank you for creating such amazing characters! 💚"</p>
+                        </div>
+                    </div>
+                    -->
+
+# Muốn thêm card mới thì lấy code này
+                    <div class="memory-card" onclick="toggleMemoryPanel(this)">
+                        <div class="cyber-corner top-left"></div>
+                        <div class="cyber-corner top-right"></div>
+                        <div class="cyber-corner bottom-left"></div>
+                        <div class="cyber-corner bottom-right"></div>
+                        <div class="art-frame-wrapper">
+                            <img src="profile.jpg" alt="Preserved Fanart" class="museum-art">
+                            <div class="light-scan-bar"></div>
+                        </div>
+                        <div class="memory-info-panel glass-panel">
+                            <span class="system-tag"><i class="fas fa-seedling"></i> Gift From</span>
+                            <h4 class="artist-handle">@ArtistName</h4>
+                            <p class="artist-message">"This artwork is a fragment of a memory from the deep forest. Thank you for creating such amazing characters! 💚"</p>
+                        </div>
+                    </div>
+
+<!-- PHẦN NÀY LÀ KHUNG UPDATE TIN TỨC Á -->
+<div style="background: rgba(13, 27, 27, 0.45); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(167, 244, 212, 0.3); border-radius: 20px; padding: 20px; max-width: 100%; box-sizing: border-box; font-family: sans-serif; color: #e0f2f1; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); margin: 15px auto; text-align: left;">
+  
+  <!-- Header: Avatar + Tên -->
+  <div style="display: flex; align-items: center; margin-bottom: 14px;">
+    <!-- Bạn nhớ thay link ảnh avatar thật của bạn vào chỗ src="..." này nhé -->
+    <img src="https://i.pinimg.com/736x/76/44/4e/76444e705f6cebc3666daade4dfcd5d6.jpg" style="width: 45px; height: 45px; border-radius: 50%; border: 1.5px solid #a7f4d4; object-fit: cover; margin-right: 12px;" />
+    <div style="line-height: 1.3;">
+      <div>
+        <span style="font-weight: bold; font-size: 15px; color: #ffffff;">Kidoes</span>
+        <span style="font-size: 13px; color: rgba(167, 244, 212, 0.7); margin-left: 4px;">@Kidoes</span>
+      </div>
+      <div style="font-size: 12px; color: #88a0a0; margin-top: 2px;">July 20, 2026</div> <!-- CHỖ ĐỔI NGÀY THÁNG NĂM -->
+    </div>
+  </div>
+  
+  <!-- Nội dung Status (Tự động xuống dòng, không tràn màn hình) -->
+  <div style="font-size: 15px; line-height: 1.5; color: #e0f2f1; word-break: break-word; white-space: pre-wrap;">
+Heyaa! Well I wanna make a small surprise for ya guys for those who wanna send fanarts. 
+Since ya guys love Martin and my other bots and want to send fanarts for me soo yeaa I'll upload the link to send fanarts, I'll review them and post on this web I made so ya guys can admire everyone's art together :3
+  </div>
+
+<!-- CONTAINER ẢNH/GIF ĐÃ ĐƯỢC CHỈNH NHỎ VÀ CĂN GIỮA -->
+  <div style="margin-top: 14px; text-align: center; background: none; box-shadow: none;">
+    <!-- Bạn có thể thay đổi số 70% ở 'max-width' để ảnh to hoặc nhỏ hơn nha -->
+    <img src="https://i.pinimg.com/originals/ee/6c/46/ee6c46b943c9af8e51aa193fb6ccb75b.gif" style="max-width: 100%; height: auto; display: inline-block; object-fit: contain; border-radius: 12px; border: 1px solid rgba(167, 244, 212, 0.2); margin: 0 auto; padding: 0;" alt="Attachment" />
+  </div>
+
+
+                      <!-- Khung Card Mẫu Mới Có Tim & Phóng To 
+                    <div class="memory-card" onclick="toggleMemoryPanel(this)">
+                        <div class="cyber-corner top-left"></div>
+                        <div class="cyber-corner top-right"></div>
+                        <div class="cyber-corner bottom-left"></div>
+                        <div class="cyber-corner bottom-right"></div>
+    
+                        <div class="art-frame-wrapper">
+                            <img src="profile.jpg" alt="Preserved Fanart" class="museum-art">
+                            <div class="light-scan-bar"></div>
+        
+                             Lớp phủ nút tính năng khi hover vào ảnh 
+                            <div class="art-hover-overlay">
+                                <button class="action-overlay-btn view-full-btn" onclick="openLightbox('profile.jpg', event)">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="memory-info-panel glass-panel">
+                            <span class="system-tag"><i class="fas fa-seedling"></i> Gift From</span>
+                            <h4 class="artist-handle">@ArtistName</h4>
+                            <p class="artist-message">"This artwork is a fragment of a memory from the deep forest. Thank you for creating such amazing characters! 💚"</p>
+        
+                             Thanh tương tác Thả tim nằm dưới cùng panel chữ
+                            <div class="card-actions" style="display: flex; justify-content: flex-end; margin-top: 10px; border-top: 1px dashed rgba(45, 212, 191, 0.2); padding-top: 8px;">
+                                <button class="like-btn" data-like-id="fanart_01" onclick="handleLikeCard('fanart_01', event)" style="background: transparent; border: none; color: #a3b899; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; transition: all 0.3s ease;">
+                                    <i class="far fa-heart" style="color: #ef4444; transition: transform 0.2s ease;"></i> 
+                                    <span class="like-count">0</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                -->

@@ -1,0 +1,700 @@
+/* ================= GLOBAL DESIGN SYSTEM ================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #020705;
+    color: #e2e8f0;
+    font-family: 'Quicksand', sans-serif;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* KHUNG NỀN DI ĐỘNG KỸ THUẬT SỐ (CSS SCROLL PARALLAX) */
+.parallax-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100%;
+    background-image: url('bg.jpg'); /* File ảnh tàn tích của bồ */
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    z-index: 0;
+    pointer-events: none;
+    background-attachment: scroll;
+    animation: backgroundBreathe 12s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundBreathe {
+    0% { transform: scale(1) translateY(0); filter: brightness(1); }
+    100% { transform: scale(1.03) translateY(-5px); filter: brightness(1.08); }
+}
+
+/* Reusable Glassmorphism Specification */
+.glass-panel {
+    background: rgba(9, 29, 23, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    border-radius: 26px;
+}
+
+/* ================= HORIZONTAL CINEMATIC SLIDER ELEMENT ================= */
+.cinema-slider {
+    display: flex;
+    width: 200vw;
+    transition: transform 0.7s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.museum-room {
+    width: 100vw;
+    min-height: 100vh;
+    will-change: transform;
+}
+
+.main-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    padding: 80px 0;
+    width: 100%;
+}
+
+.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #2dd4bf;
+    font-size: 2rem;
+    margin-bottom: 35px;
+}
+
+/* ================= INTERACTION COMPONENTS (BUTTONS) ================= */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-primary {
+    background: #10b981;
+    color: #06110d;
+    border: none;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+.btn-primary:hover {
+    background: #2dd4bf;
+    box-shadow: 0 0 25px rgba(45, 212, 191, 0.7);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px dashed #17b890;
+    color: #2dd4bf;
+}
+
+.btn-outline:hover {
+    border-style: solid;
+    background: rgba(23, 184, 144, 0.1);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(45, 212, 191, 0.3);
+}
+
+.btn-back-home {
+    background: transparent;
+    border: 2px solid #10b981;
+    color: #2dd4bf;
+    padding: 14px 32px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-back-home:hover {
+    background: #10b981;
+    color: #06110d;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    transform: translateX(-3px);
+}
+
+/* ================= SECTION 1: HERO CONTAINER ================= */
+.hero-section {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 1.5;
+}
+
+.hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3.2rem;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.hero-title .highlight {
+    color: #17b890;
+    text-shadow: 0 0 20px rgba(23, 184, 144, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: #a3b899;
+    margin-bottom: 35px;
+}
+
+.hero-ctas {
+    display: flex;
+    gap: 15px;
+}
+
+.hero-mascot {
+    flex: 0.8;
+    display: flex;
+    justify-content: center;
+}
+
+.mascot-img {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    animation: breathing 6s ease-in-out infinite;
+}
+
+@keyframes breathing {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}
+
+/* ================= INTERACTIVE MEMORY GALLERY CARD SYSTEM (STATIC FLOW) ================= */
+.memory-gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0;
+    position: relative;
+    z-index: 10;
+    transition: all 0.5s ease;
+    align-items: start; /* Khóa chiều cao độc lập cho từng card */
+}
+
+.memory-card {
+    position: relative;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(9, 29, 23, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(45, 212, 191, 0.25);
+    border-radius: 24px;
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    justify-self: center;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+    animation: cardFloat 5s ease-in-out infinite alternate;
+}
+
+@keyframes cardFloat {
+    0% { transform: translateY(0px) rotate(0deg); }
+    100% { transform: translateY(-6px) rotate(0.5deg); }
+}
+
+.art-frame-wrapper {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    border-radius: 18px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.museum-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+/* KHI TƯƠNG TÁC HOVER/CLICK: Đóng băng lơ lửng để tập trung xem thông tin */
+.memory-card:hover, .memory-card.expanded {
+    animation-play-state: paused;
+    border-color: #2dd4bf;
+    box-shadow: 0 0 25px rgba(45, 212, 191, 0.4);
+}
+.memory-card:hover .museum-art {
+    transform: scale(1.03);
+}
+
+/* CẤU HÌNH BẢNG THÔNG TIN TĨNH NẰM DƯỚI: Co giãn đẩy card kế bên */
+.memory-info-panel {
+    display: block;
+    width: 100%;
+    max-height: 0; /* Mặc định ẩn chiều cao về 0 */
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 10px;
+    margin-top: 0;
+    transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, padding 0.5s ease, margin 0.5s ease;
+    background: rgba(6, 20, 16, 0.5) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* HOVER HOẶC CLICK: Bung rộng chiều cao đẩy các card xung quanh xịch ra */
+.memory-card:hover .memory-info-panel, 
+.memory-card.expanded .memory-info-panel {
+    opacity: 1;
+    max-height: 250px; /* Tăng nhẹ để chứa thoải mái cả thanh trái tim bên dưới */
+    padding: 15px 10px 5px 10px;
+    margin-top: 12px;
+}
+
+.system-tag {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; color: #10b981;
+    letter-spacing: 1px; display: inline-flex; align-items: center; gap: 5px;
+}
+.artist-handle {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #fff; font-size: 1.1rem; font-weight: 700;
+    margin: 4px 0;
+}
+.artist-message { color: #a3b899; font-size: 0.85rem; font-style: italic; line-height: 1.5; }
+
+/* Cyberpunk Corner Cuts */
+.cyber-corner {
+    position: absolute;
+    width: 8px; height: 8px; border: 1px solid #2dd4bf;
+    z-index: 5; pointer-events: none; opacity: 0.6;
+}
+.cyber-corner.top-left { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+.cyber-corner.top-right { top: 6px; right: 6px; border-left: none; border-bottom: none; }
+.cyber-corner.bottom-left { bottom: 6px; left: 6px; border-right: none; border-top: none; }
+.cyber-corner.bottom-right { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+
+.light-scan-bar {
+    position: absolute;
+    top: -100%; left: 0; width: 100%; height: 30%;
+    background: linear-gradient(to bottom, rgba(45, 212, 191, 0) 0%, rgba(45, 212, 191, 0.25) 50%, rgba(45, 212, 191, 0) 100%);
+    pointer-events: none; z-index: 3;
+}
+.memory-card:hover .light-scan-bar { animation: lightScanEffect 1.5s linear infinite; }
+@keyframes lightScanEffect { 0% { top: -100%; } 100% { top: 200%; } }
+
+/* ================= SECTION 3: ABOUT ME CARDS ================= */
+.about-card {
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.about-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 24px;
+    border: 2px solid #10b981;
+    object-fit: cover;
+}
+
+.about-text p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+.about-text p:last-child { margin-bottom: 0; }
+
+/* ================= SECTION 4: CHARACTERS GRID ================= */
+.char-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.char-card {
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.char-card:hover {
+    border-color: #10b981;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.char-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 2px solid rgba(45, 212, 191, 0.4);
+}
+
+.char-card h3 {
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    margin-bottom: 10px;
+}
+
+.char-card p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    min-height: 70px;
+}
+
+.btn-chat {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid #10b981;
+    color: #2dd4bf;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.btn-chat:hover {
+    background: #10b981;
+    color: #06110d;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+/* ================= SECTION 5: STATS PANEL ================= */
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.stat-box {
+    padding: 25px;
+    text-align: center;
+}
+
+.stat-num {
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.2rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.text-green { color: #10b981; }
+
+/* ================= SECTION 6: GUESTBOOK SPACE ================= */
+.guestbook-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 30px;
+}
+
+.guest-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.guest-form input, .guest-form textarea {
+    width: 100%;
+    padding: 14px;
+    background: rgba(6, 17, 13, 0.7);
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    border-radius: 14px;
+    color: #fff;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.guest-form input:focus, .guest-form textarea:focus {
+    outline: none;
+    border-color: #2dd4bf;
+    box-shadow: 0 0 10px rgba(45, 212, 191, 0.2);
+}
+
+.guest-messages {
+    max-height: 280px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-right: 10px;
+}
+
+.msg-card {
+    border-radius: 18px;
+    padding: 15px;
+}
+
+.msg-card h4 { color: #2dd4bf; font-size: 0.9rem; margin-bottom: 5px; }
+.msg-card p { color: #cbd5e1; font-size: 0.88rem; line-height: 1.4; }
+.new-msg { animation: slideIn 0.4s ease-out; }
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.guest-messages::-webkit-scrollbar { width: 6px; }
+.guest-messages::-webkit-scrollbar-thumb { background: rgba(16, 185, 129, 0.3); border-radius: 10px; }
+
+/* ================= BACKGROUND FX & FLOATING WIDGETS ================= */
+.mouse-glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(0,0,0,0) 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.fireflies-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.firefly {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: #34d399;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #10b981, 0 0 20px #10b981;
+    opacity: 0;
+    animation: fly ease-in-out infinite;
+}
+
+@keyframes fly {
+    0% { opacity: 0; transform: translateY(0) scale(0.8); }
+    50% { opacity: 0.6; transform: translateY(-30px) translateX(15px) scale(1.2); }
+    100% { opacity: 0; transform: translateY(-60px) scale(0.8); }
+}
+
+.floating-chibi {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 99;
+    pointer-events: none;
+}
+
+.floating-chibi img {
+    width: 200px; /* Đã cập nhật kích thước to chuẩn cho bồ */
+    height: auto;
+    animation: floatChibi 4s ease-in-out infinite;
+}
+
+@keyframes floatChibi {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.floating-quote {
+    position: fixed;
+    bottom: 30px; 
+    left: 80px;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #a7f3d0;
+    opacity: 0.6;
+    z-index: 99;
+    background: rgba(0,0,0,0.4);
+    padding: 6px 12px;
+    border-radius: 12px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+
+.floating-quote.shift {
+    left: 280px;
+    opacity: 0.8;
+}
+
+/* ================= FLOATING LOFI PLAYER WIDGET ================= */
+.music-player-widget {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background: rgba(9, 29, 23, 0.85);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 30px;
+    padding: 6px;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 250px;
+    overflow: hidden;
+}
+
+.music-player-widget.minimized {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.player-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #10b981;
+    border: none;
+    color: #06110d;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.player-content {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.vinyl-wrapper { width: 34px; height: 34px; flex-shrink: 0; }
+.vinyl-disc { width: 100%; height: 100%; border-radius: 50%; border: 2px solid #000; object-fit: cover; }
+.vinyl-disc.playing { animation: rotateVinyl 3s linear infinite; }
+@keyframes rotateVinyl { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.track-info { display: flex; flex-direction: column; margin-left: 10px; flex-grow: 1; }
+.track-title { font-size: 0.8rem; font-weight: 600; color: #fff; }
+.track-status { font-size: 0.7rem; color: #a7f3d0; }
+.ctrl-btn { background: transparent; border: none; color: #2dd4bf; cursor: pointer; font-size: 0.9rem; padding: 0 10px; }
+
+/* ================= RESPONSIVE VIEWPORTS ================= */
+@media (max-width: 768px) {
+    .hero-section { flex-direction: column; text-align: center; padding-top: 40px; }
+    .hero-title { font-size: 2.4rem; }
+    .hero-ctas { justify-content: center; }
+    .stats-section { grid-template-columns: repeat(2, 1fr); }
+    .about-card { flex-direction: column; text-align: center; }
+    .floating-quote, .floating-chibi { display: none; }
+    .memory-gallery-container { grid-template-columns: 1fr; }
+}
+
+/* ================= HOVER OVERLAYS & LIGHTBOX INTERACTION FX ================= */
+/* Lớp phủ tương tác ẩn hiện nút kính lúp khi rà chuột lên ảnh */
+.art-hover-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(2, 7, 5, 0.4);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 4;
+}
+
+/* Khi người dùng rà chuột vào khung ảnh thì hiện lớp phủ lên */
+.art-frame-wrapper:hover .art-hover-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Thiết kế nút kính lúp Cyberpunk phát sáng */
+.action-overlay-btn {
+    background: rgba(9, 29, 23, 0.85);
+    border: 1px solid #2dd4bf;
+    color: #2dd4bf;
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(45, 212, 191, 0.3);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateY(10px);
+}
+
+.art-frame-wrapper:hover .action-overlay-btn {
+    transform: translateY(0);
+}
+
+.action-overlay-btn:hover {
+    background: #2dd4bf;
+    color: #06110d;
+    box-shadow: 0 0 20px #2dd4bf;
+    transform: scale(1.1);
+}
+
+/* Hiệu ứng nhịp đập khi di chuột qua nút trái tim */
+.like-btn:hover i {
+    transform: scale(1.3);
+}
+
+/* Hiệu ứng trồi sụt của icon bảng chờ lấp lánh */
+@keyframes floatIcon {
+    0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 5px rgba(45, 212, 191, 0.2)); }
+    100% { transform: translateY(-8px) scale(1.03); filter: drop-shadow(0 0 15px rgba(45, 212, 191, 0.5)); }
+}
+
