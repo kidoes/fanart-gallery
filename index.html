@@ -266,6 +266,77 @@
                         </div>
                     </div>
 
+                    <!-- FANART 1 -->
+                    <div class="memory-card" onclick="toggleMemoryPanel(this)">
+                        <div class="cyber-corner top-left"></div>
+                        <div class="cyber-corner top-right"></div>
+                        <div class="cyber-corner bottom-left"></div>
+                        <div class="cyber-corner bottom-right"></div>
+    
+                        <div class="art-frame-wrapper">
+                            <img src="Fanarts/Fanart_1.jpg" alt="Fanart 1" class="museum-art">
+                            <div class="light-scan-bar"></div>
+        
+                             Lớp phủ nút tính năng khi hover vào ảnh 
+                            <div class="art-hover-overlay">
+                                <button class="action-overlay-btn view-full-btn" onclick="openLightbox('Fanarts/Fanart_1.jpg', event)">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="memory-info-panel glass-panel">
+                            <span class="system-tag"><i class="fas fa-seedling"></i> Gift From</span>
+                            <h4 class="artist-handle">@Kalich</h4>
+                            <p class="artist-message">This isn't Martin's fanart, but my persona (formally already an OC) for roleplay with Martin (if it's possible to post it here). I would like to send more works with him here 🥹</p>
+        
+                            <!-- Thanh tương tác Thả tim nằm dưới cùng panel chữ -->
+                            <div class="card-actions" style="display: flex; justify-content: flex-end; margin-top: 10px; border-top: 1px dashed rgba(45, 212, 191, 0.2); padding-top: 8px;">
+                                <button class="like-btn" data-like-id="fanart_01" onclick="handleLikeCard('fanart_01', event)" style="background: transparent; border: none; color: #a3b899; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; transition: all 0.3s ease;">
+                                    <i class="far fa-heart" style="color: #ef4444; transition: transform 0.2s ease;"></i> 
+                                    <span class="like-count">0</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                
+                      <!-- FANART 2 -->
+                    <div class="memory-card" onclick="toggleMemoryPanel(this)">
+                        <div class="cyber-corner top-left"></div>
+                        <div class="cyber-corner top-right"></div>
+                        <div class="cyber-corner bottom-left"></div>
+                        <div class="cyber-corner bottom-right"></div>
+    
+                        <div class="art-frame-wrapper">
+                            <img src="Fanarts/Fanart_2.png" alt="Fanart 2" class="museum-art">
+                            <div class="light-scan-bar"></div>
+        
+                             Lớp phủ nút tính năng khi hover vào ảnh 
+                            <div class="art-hover-overlay">
+                                <button class="action-overlay-btn view-full-btn" onclick="openLightbox('Fanarts/Fanart_2.png', event)">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="memory-info-panel glass-panel">
+                            <span class="system-tag"><i class="fas fa-seedling"></i> Gift From</span>
+                            <h4 class="artist-handle">@Newt</h4>
+                            <p class="artist-message">"I saw the fan art thing and knew I had to draw him!!There mite be some mistakes so I'm sorry if so :`3"</p>
+        
+                            <!-- Thanh tương tác Thả tim nằm dưới cùng panel chữ -->
+                            <div class="card-actions" style="display: flex; justify-content: flex-end; margin-top: 10px; border-top: 1px dashed rgba(45, 212, 191, 0.2); padding-top: 8px;">
+                                <button class="like-btn" data-like-id="fanart_02" onclick="handleLikeCard('fanart_02', event)" style="background: transparent; border: none; color: #a3b899; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; transition: all 0.3s ease;">
+                                    <i class="far fa-heart" style="color: #ef4444; transition: transform 0.2s ease;"></i> 
+                                    <span class="like-count">0</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+            
+
                 </div>
 
                 <!-- Nút quay lại sảnh chính Home -->
@@ -447,17 +518,8 @@
         });
 
         function toggleMemoryPanel(card) {
-            if (card.classList.contains('expanded')) {
-                card.classList.remove('expanded');
-                return;
+            card.classList.toggle('expanded');
             }
-
-            document.querySelectorAll('.memory-card').forEach(c => {
-                c.classList.remove('expanded');
-            });
-
-            card.classList.add('expanded');
-        }
 
         // 🔍 TÍNH NĂNG PHÓNG TO ẢNH FULL RESOLUTION
         function openLightbox(imgSrc, event) {
