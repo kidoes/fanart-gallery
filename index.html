@@ -3,45 +3,37 @@
 <head>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { 
-        getFirestore, 
-        doc, 
-        getDoc, 
-        setDoc, 
-        onSnapshot, 
-        increment,
-        collection,
-        addDoc,
-        query,
-        orderBy,
-        serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { 
+            getFirestore, 
+            collection,
+            addDoc,
+            query,
+            orderBy,
+            onSnapshot,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
-        apiKey: "AIzaSyA2yamFE-J5wQbiDY134w3Klw1J-jA-72A",
-        authDomain: "kidoes-fanart-gallery.firebaseapp.com",
-        databaseURL: "https://kidoes-fanart-gallery-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "kidoes-fanart-gallery",
-        storageBucket: "kidoes-fanart-gallery.firebasestorage.app",
-        messagingSenderId: "629053279065",
-        appId: "1:629053279065:web:5476466088c61e29335a48",
-         measurementId: "G-HP46DS8TCM"
+            apiKey: "AIzaSyA2yamFE-J5wQbiDY134w3Klw1J-jA-72A",
+            authDomain: "kidoes-fanart-gallery.firebaseapp.com",
+            databaseURL: "https://kidoes-fanart-gallery-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "kidoes-fanart-gallery",
+            storageBucket: "kidoes-fanart-gallery.firebasestorage.app",
+            messagingSenderId: "629053279065",
+            appId: "1:629053279065:web:5476466088c61e29335a48",
+            measurementId: "G-HP46DS8TCM"
         };
         
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Gắn ra window để các đoạn script khác trong trang dùng được    
+        // Gắn ra window để script Guestbook bên dưới dùng    
         window.db = db;
-        window.fbDoc = doc;
-        window.fbGetDoc = getDoc;
-        window.fbSetDoc = setDoc;
-        window.fbOnSnapshot = onSnapshot;
-         window.fbIncrement = increment;
         window.fbCollection = collection;
         window.fbAddDoc = addDoc;
         window.fbQuery = query;
         window.fbOrderBy = orderBy;
+        window.fbOnSnapshot = onSnapshot;
         window.fbServerTimestamp = serverTimestamp;
     </script>
     <meta charset="UTF-8">
@@ -63,7 +55,6 @@
             -webkit-overflow-scrolling: touch; 
         }
 
-        /* 🟢 CHỈ SỬA KHÚC NÀY ĐỂ GIẤU PHÒNG TRIỂN LÃM ĐÚNG CÁCH: */
         .cinema-slider {
             display: flex;
             width: 200vw;
@@ -76,7 +67,7 @@
             width: 100vw;
             max-width: 100vw;
             flex-shrink: 0;
-            overflow: visible !important; /* Giữ nguyên dòng này để laptop cuộn chuột không bị chậm rùa */
+            overflow: visible !important;
         }
 
         /* Khóa chết đống thanh cuộn xám vô duyên trên Cốc Cốc, Chrome, Edge và Safari */
@@ -93,10 +84,10 @@
             scrollbar-width: none !important; /* Firefox */
         }
 
-                /* ===== CHỈ FIX ĐÚNG 3 KHU VỰC BỊ LỖI TRÊN MOBILE (<= 768px) ===== */
+        /* ===== FIX 3 KHU VỰC BỊ LỖI TRÊN MOBILE (<= 768px) ===== */
         @media (max-width: 768px) {
             
-            /* 1. Sửa khung Nhân vật: Ép xếp dọc 1 cột thay vì tràn ngang */
+            /* 1. Sửa khung Nhân vật */
             .char-grid {
                 grid-template-columns: 1fr !important;
                 gap: 25px !important;
@@ -106,20 +97,20 @@
                 max-width: 100% !important;
             }
 
-            /* 2. Sửa khung Số liệu: Thu nhỏ khoảng cách, cho phép tự co giãn đều màn hình */
+            /* 2. Sửa khung Số liệu */
             .stats-section {
-                flex-direction: row !important; /* Giữ hàng ngang nhưng tự rớt dòng */
+                flex-direction: row !important;
                 flex-wrap: wrap !important;
                 justify-content: center !important;
                 gap: 15px !important;
             }
             .stat-box {
-                width: calc(50% - 10px) !important; /* Chia đôi màn hình nằm cạnh nhau cho đẹp */
+                width: calc(50% - 10px) !important;
                 min-width: 140px !important;
                 padding: 15px 10px !important;
             }
 
-            /* 3. Sửa Guestbook: Ép Form nhập và Tin nhắn xếp dọc nối đuôi nhau */
+            /* 3. Sửa Guestbook */
             .guestbook-container {
                 flex-direction: column !important;
                 gap: 20px !important;
@@ -129,7 +120,6 @@
                 max-width: 100% !important;
             }
         }
-
     </style>
 </head>
 <body>
@@ -277,10 +267,7 @@
                             <button type="submit" class="btn btn-primary">Leave Message ✨</button>
                         </form>
                         <div class="guest-messages" id="guestMessages">
-                            <div class="msg-card glass-panel">
-                                <h4>✨ Anonymous Gang</h4>
-                                <p>Your sanctuary feels so warm. Thanks for making awesome bots!</p>
-                            </div>
+                            <!-- Tin nhắn từ Firebase sẽ tự nạp vào đây -->
                         </div>
                     </div>
                 </section>
@@ -320,7 +307,6 @@
                             <img src="Fanarts/Fanart_1.jpg" alt="Fanart 1" class="museum-art">
                             <div class="light-scan-bar"></div>
         
-                             Lớp phủ nút tính năng khi hover vào ảnh 
                             <div class="art-hover-overlay">
                                 <button class="action-overlay-btn view-full-btn" onclick="openLightbox('Fanarts/Fanart_1.jpg', event)">
                                     <i class="fas fa-search-plus"></i>
@@ -332,18 +318,10 @@
                             <span class="system-tag"><i class="fas fa-seedling"></i> Gift From</span>
                             <h4 class="artist-handle">@Kalich</h4>
                             <p class="artist-message">This isn't Martin's fanart, but my persona (formally already an OC) for roleplay with Martin (if it's possible to post it here). I would like to send more works with him here 🥹</p>
-        
-                            <!-- Thanh tương tác Thả tim nằm dưới cùng panel chữ -->
-                            <div class="card-actions" style="display: flex; justify-content: flex-end; margin-top: 10px; border-top: 1px dashed rgba(45, 212, 191, 0.2); padding-top: 8px;">
-                                <button class="like-btn" data-like-id="fanart_01" onclick="handleLikeCard('fanart_01', event)" style="background: transparent; border: none; color: #a3b899; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; transition: all 0.3s ease;">
-                                    <i class="far fa-heart" style="color: #ef4444; transition: transform 0.2s ease;"></i> 
-                                    <span class="like-count">0</span>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 
-                      <!-- FANART 2 -->
+                    <!-- FANART 2 -->
                     <div class="memory-card" onclick="toggleMemoryPanel(this)">
                         <div class="cyber-corner top-left"></div>
                         <div class="cyber-corner top-right"></div>
@@ -354,7 +332,6 @@
                             <img src="Fanarts/Fanart_2.png" alt="Fanart 2" class="museum-art">
                             <div class="light-scan-bar"></div>
         
-                             Lớp phủ nút tính năng khi hover vào ảnh 
                             <div class="art-hover-overlay">
                                 <button class="action-overlay-btn view-full-btn" onclick="openLightbox('Fanarts/Fanart_2.png', event)">
                                     <i class="fas fa-search-plus"></i>
@@ -366,20 +343,11 @@
                             <span class="system-tag"><i class="fas fa-seedling"></i> Gift From</span>
                             <h4 class="artist-handle">@Newt</h4>
                             <p class="artist-message">"I saw the fan art thing and knew I had to draw him!!There mite be some mistakes so I'm sorry if so :`3"</p>
-        
-                            <!-- Thanh tương tác Thả tim nằm dưới cùng panel chữ -->
-                            <div class="card-actions" style="display: flex; justify-content: flex-end; margin-top: 10px; border-top: 1px dashed rgba(45, 212, 191, 0.2); padding-top: 8px;">
-                                <button class="like-btn" data-like-id="fanart_02" onclick="handleLikeCard('fanart_02', event)" style="background: transparent; border: none; color: #a3b899; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; transition: all 0.3s ease;">
-                                    <i class="far fa-heart" style="color: #ef4444; transition: transform 0.2s ease;"></i> 
-                                    <span class="like-count">0</span>
-                                </button>
-                            </div>
                         </div>
                     </div>
                 
                 </div>
             
-
                 <!-- Nút quay lại sảnh chính Home -->
                 <div class="center-btn" style="margin-top: 50px; display: flex; justify-content: center; width: 100%;">
                     <button onclick="switchRoom('landing')" class="btn btn-back-home">
@@ -394,7 +362,7 @@
 
     <!-- Interactive Scripts -->
     <script>
-        // Hệ thống cảm biến thông minh: Tự động quản lý Trạng thái trống (Empty State) & Đồng bộ nhân bản
+        // Tự động quản lý Trạng thái trống (Empty State) & Đồng bộ nhân bản Card ngoài sảnh
         document.addEventListener("DOMContentLoaded", () => {
             const fullGallery = document.getElementById("fullGalleryContainer");
             const featured = document.getElementById("featuredContainer");
@@ -420,7 +388,7 @@
             }
         });
 
-        // Cinematic Room Transition System (Framer Motion emulation)
+        // Cinematic Room Transition System
         function switchRoom(targetRoom) {
             const slider = document.getElementById('cinemaSlider');
             if (targetRoom === 'gallery') {
@@ -531,65 +499,73 @@
             }
         });
 
-        // GUESTBOOK LOGIC (Firebase - dùng chung cho mọi người)
+        // 💚 GUESTBOOK LOGIC (LƯU VÀ ĐỒNG BỘ TIN NHẮN BẰNG FIREBASE)
         const guestMessagesContainer = document.getElementById('guestMessages');
         const guestbookForm = document.getElementById('guestbookForm');
 
-        function renderMessage(name, msg, isNew = false) {
+        function renderMessage(name, msg) {
             const card = document.createElement('div');
-            card.className = `msg-card glass-panel ${isNew ? 'new-msg' : ''}`;
+            card.className = 'msg-card glass-panel';
             card.innerHTML = `<h4>✨ ${escapeHtml(name)}</h4><p>${escapeHtml(msg)}</p>`;
-            guestMessagesContainer.appendChild(card);
+            // Chèn tin nhắn mới lên trên cùng
+            guestMessagesContainer.insertBefore(card, guestMessagesContainer.firstChild);
         }
 
-        // Tránh lỗi hiển thị nếu người dùng gõ ký tự đặc biệt như <, >
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
-        // Lắng nghe realtime: tin nhắn mới từ BẤT KỲ AI cũng tự hiện ra ngay
         function initGuestbook() {
             if (!window.db || !window.fbQuery) {
-                setTimeout(initGuestbook, 200); // Đợi 0.2s nếu Firebase chưa nạp xong
+                setTimeout(initGuestbook, 200); // Đợi Firebase nạp xong
                 return;
             }
+
+            // Tạo query lấy danh sách tin nhắn sắp xếp theo thời gian
+            const guestbookQuery = window.fbQuery(
+                window.fbCollection(window.db, "guestbook"),
+                window.fbOrderBy("createdAt", "asc")
+            );
+
+            // Lắng nghe realtime từ Firebase Firestore
+            window.fbOnSnapshot(guestbookQuery, (snapshot) => {
+                guestMessagesContainer.innerHTML = "";
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    renderMessage(data.name, data.msg);
+                });
+            });
         }
 
-        window.fbOnSnapshot(guestbookQuery, (snapshot) => {
-            guestMessagesContainer.innerHTML = ""; // vẽ lại toàn bộ danh sách mỗi khi có thay đổi
-            snapshot.forEach((docSnap) => {
-                const data = docSnap.data();
-                renderMessage(data.name, data.msg);
-            });
-        // cuộn xuống tin nhắn mới nhất (tùy chọn, có thể bỏ nếu không thích)
-        guestMessagesContainer.scrollTop = guestMessagesContainer.scrollHeight;
-    });
+        // Khởi chạy Guestbook
+        initGuestbook();
 
-    guestbookForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const name = document.getElementById('guestName').value || 'Anonymous';
-        const msg = document.getElementById('guestMsg').value;
+        // Xử lý gửi tin nhắn lên Firebase
+        guestbookForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('guestName').value || 'Anonymous';
+            const msg = document.getElementById('guestMsg').value;
 
-        if (!msg.trim()) return;
+            if (!msg.trim()) return;
 
-        try {
-            await window.fbAddDoc(window.fbCollection(window.db, "guestbook"), {
-                name: name,
-                msg: msg,
-                createdAt: window.fbServerTimestamp()
-            });
-            guestbookForm.reset();
-        } catch (err) {
-            console.error("Lỗi gửi tin nhắn:", err);
-            alert("Gửi tin nhắn thất bại, thử lại nha!");
-        }
-    });
+            try {
+                await window.fbAddDoc(window.fbCollection(window.db, "guestbook"), {
+                    name: name,
+                    msg: msg,
+                    createdAt: window.fbServerTimestamp()
+                });
+                guestbookForm.reset();
+            } catch (err) {
+                console.error("Lỗi gửi tin nhắn:", err);
+                alert("Gửi tin nhắn thất bại, bồ kiểm tra lại kết nối mạng nha!");
+            }
+        });
 
         function toggleMemoryPanel(card) {
             card.classList.toggle('expanded');
-            }
+        }
 
         // 🔍 TÍNH NĂNG PHÓNG TO ẢNH FULL RESOLUTION
         function openLightbox(imgSrc, event) {
@@ -615,108 +591,7 @@
                 lightbox.style.display = 'none';
             }, 400);
         }
-
-        // ❤️ TÍNH NĂNG THẢ TIM & LƯU TRỮ VÀO BỘ NHỚ LOCALSTORAGE
-// ❤️ TÍNH NĂNG THẢ TIM CẢI TIẾN (TĂNG TỐC HIỂN THỊ + THÔNG BÁO TỐT HƠN)
-
-        async function handleLikeCard(likeId, event) {
-            if (event) event.stopPropagation();
-
-            let myLikes = JSON.parse(localStorage.getItem('myGalleryLikes')) || {};
-            
-            // Nếu đã thả tim rồi -> Thông báo nhẹ cho người dùng biết
-            if (myLikes[likeId]) {
-                alert("Bồ đã thả tim cho tác phẩm này rồi nhé! 💚");
-                return;
-            }
-
-            // 1. CẬP NHẬT GIAO DIỆN NGAY LẬP TỨC (Không cần chờ Firebase)
-            markHeartAsLiked(likeId);
-            myLikes[likeId] = true;
-            localStorage.setItem('myGalleryLikes', JSON.stringify(myLikes));
-
-            // Tăng tạm 1 số đếm trên màn hình cho bồ thấy liền
-            const buttons = document.querySelectorAll(`[data-like-id="${likeId}"]`);
-            buttons.forEach(btn => {
-                const countText = btn.querySelector('.like-count');
-                if (countText) {
-                    let currentCount = parseInt(countText.innerText) || 0;
-                    countText.innerText = currentCount + 1;
-                }
-            });
-
-            // 2. GỬI DỮ LIỆU LÊN FIREBASE FIRESTORE
-            try {
-                if (!window.db) {
-                    console.warn("Firebase chưa sẵn sàng, dữ liệu đã lưu tạm ở máy.");
-                    return;
-                }
-
-                const likeRef = window.fbDoc(window.db, "likes", likeId);
-                const likeSnap = await window.fbGetDoc(likeRef);
-
-                if (likeSnap.exists()) {
-                    await window.fbSetDoc(likeRef, { count: window.fbIncrement(1) }, { merge: true });
-                } else {
-                    await window.fbSetDoc(likeRef, { count: 1 });
-                }
-            } catch (err) {
-                console.error("Lỗi đồng bộ Firebase:", err);
-            }
-        }
-
-        function markHeartAsLiked(likeId) {
-            const buttons = document.querySelectorAll(`[data-like-id="${likeId}"]`);
-            buttons.forEach(btn => {
-                const heartIcon = btn.querySelector('i');
-                if (heartIcon) {
-                    heartIcon.className = "fas fa-heart";
-                    heartIcon.style.transform = "scale(1.2)";
-                    btn.style.color = "#ef4444";
-                }
-            });
-        }
-
-        function updateLikeCountUI(likeId, count) {
-            const buttons = document.querySelectorAll(`[data-like-id="${likeId}"]`);
-            buttons.forEach(btn => {
-                const countText = btn.querySelector('.like-count');
-                if (countText) countText.innerText = count;
-            });
-        }
-
-        function initFirebaseLikes() {
-            if (!window.db) {
-                setTimeout(initFirebaseLikes, 200);
-                return;
-            }
-
-            const myLikes = JSON.parse(localStorage.getItem('myGalleryLikes')) || {};
-            const allLikeIds = new Set();
-
-            document.querySelectorAll('[data-like-id]').forEach(btn => {
-                allLikeIds.add(btn.getAttribute('data-like-id'));
-            });
-
-            allLikeIds.forEach(likeId => {
-                if (myLikes[likeId]) {
-                    markHeartAsLiked(likeId);
-                }
-
-                const likeRef = window.fbDoc(window.db, "likes", likeId);
-                window.fbOnSnapshot(likeRef, (docSnap) => {
-                    if (docSnap.exists()) {
-                        const count = docSnap.data().count || 0;
-                        updateLikeCountUI(likeId, count);
-                    }
-                });
-            });
-        }
-
-        window.addEventListener("load", () => {
-            setTimeout(initFirebaseLikes, 300);
-        });
-</script>
+    </script>
 
     <!-- ================= LIGHTBOX MODAL ================= -->
     <div id="customLightbox" class="lightbox-modal" onclick="closeLightbox()" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(2, 7, 5, 0.95); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; backdrop-filter: blur(8px);">
