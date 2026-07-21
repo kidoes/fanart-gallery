@@ -1,6 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { 
+        getFirestore, 
+        doc, 
+        getDoc, 
+        setDoc, 
+        onSnapshot, 
+        increment,
+        collection,
+        addDoc,
+        query,
+        orderBy,
+        serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+        apiKey: "AIzaSyA2yamFE-J5wQbiDY134w3Klw1J-jA-72A",
+        authDomain: "kidoes-fanart-gallery.firebaseapp.com",
+        databaseURL: "https://kidoes-fanart-gallery-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "kidoes-fanart-gallery",
+        storageBucket: "kidoes-fanart-gallery.firebasestorage.app",
+        messagingSenderId: "629053279065",
+        appId: "1:629053279065:web:5476466088c61e29335a48",
+         measurementId: "G-HP46DS8TCM"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Gắn ra window để các đoạn script khác trong trang dùng được    
+        window.db = db;
+        window.fbDoc = doc;
+        window.fbGetDoc = getDoc;
+        window.fbSetDoc = setDoc;
+        window.fbOnSnapshot = onSnapshot;
+         window.fbIncrement = increment;
+        window.fbCollection = collection;
+        window.fbAddDoc = addDoc;
+        window.fbQuery = query;
+        window.fbOrderBy = orderBy;
+        window.fbServerTimestamp = serverTimestamp;
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kidoes' Fanart Gallery 💚 Digital Forest Museum</title>
@@ -337,8 +380,6 @@
                 </div>
             
 
-                </div>
-
                 <!-- Nút quay lại sảnh chính Home -->
                 <div class="center-btn" style="margin-top: 50px; display: flex; justify-content: center; width: 100%;">
                     <button onclick="switchRoom('landing')" class="btn btn-back-home">
@@ -490,32 +531,61 @@
             }
         });
 
-        // GUESTBOOK LOGIC
+        // GUESTBOOK LOGIC (Firebase - dùng chung cho mọi người)
         const guestMessagesContainer = document.getElementById('guestMessages');
         const guestbookForm = document.getElementById('guestbookForm');
 
         function renderMessage(name, msg, isNew = false) {
             const card = document.createElement('div');
             card.className = `msg-card glass-panel ${isNew ? 'new-msg' : ''}`;
-            card.innerHTML = `<h4>✨ ${name}</h4><p>${msg}</p>`;
-            guestMessagesContainer.insertBefore(card, guestMessagesContainer.firstChild);
+            card.innerHTML = `<h4>✨ ${escapeHtml(name)}</h4><p>${escapeHtml(msg)}</p>`;
+            guestMessagesContainer.appendChild(card);
         }
 
-        const savedMessages = JSON.parse(localStorage.getItem('forestGuestbook')) || [];
-        savedMessages.forEach(m => renderMessage(m.name, m.msg));
+        // Tránh lỗi hiển thị nếu người dùng gõ ký tự đặc biệt như <, >
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
 
-        guestbookForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('guestName').value || 'Anonymous';
-            const msg = document.getElementById('guestMsg').value;
+        // Lắng nghe realtime: tin nhắn mới từ BẤT KỲ AI cũng tự hiện ra ngay
+        function initGuestbook() {
+            if (!window.db || !window.fbQuery) {
+                setTimeout(initGuestbook, 200); // Đợi 0.2s nếu Firebase chưa nạp xong
+                return;
+            }
+        }
 
-            renderMessage(name, msg, true);
+        window.fbOnSnapshot(guestbookQuery, (snapshot) => {
+            guestMessagesContainer.innerHTML = ""; // vẽ lại toàn bộ danh sách mỗi khi có thay đổi
+            snapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                renderMessage(data.name, data.msg);
+            });
+        // cuộn xuống tin nhắn mới nhất (tùy chọn, có thể bỏ nếu không thích)
+        guestMessagesContainer.scrollTop = guestMessagesContainer.scrollHeight;
+    });
 
-            savedMessages.push({ name: name, msg: msg });
-            localStorage.setItem('forestGuestbook', JSON.stringify(savedMessages));
+    guestbookForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const name = document.getElementById('guestName').value || 'Anonymous';
+        const msg = document.getElementById('guestMsg').value;
 
+        if (!msg.trim()) return;
+
+        try {
+            await window.fbAddDoc(window.fbCollection(window.db, "guestbook"), {
+                name: name,
+                msg: msg,
+                createdAt: window.fbServerTimestamp()
+            });
             guestbookForm.reset();
-        });
+        } catch (err) {
+            console.error("Lỗi gửi tin nhắn:", err);
+            alert("Gửi tin nhắn thất bại, thử lại nha!");
+        }
+    });
 
         function toggleMemoryPanel(card) {
             card.classList.toggle('expanded');
@@ -547,47 +617,106 @@
         }
 
         // ❤️ TÍNH NĂNG THẢ TIM & LƯU TRỮ VÀO BỘ NHỚ LOCALSTORAGE
-        function handleLikeCard(likeId, event) {
-            if (event) event.stopPropagation(); 
-            
-            let likesData = JSON.parse(localStorage.getItem('galleryLikes')) || {};
-            
-            if (!likesData[likeId]) {
-                likesData[likeId] = 1; 
-                localStorage.setItem('galleryLikes', JSON.stringify(likesData));
-                
-                updateLikeUI(likeId, 1, true);
-            }
-        }
+// ❤️ TÍNH NĂNG THẢ TIM CẢI TIẾN (TĂNG TỐC HIỂN THỊ + THÔNG BÁO TỐT HƠN)
 
-        function updateLikeUI(likeId, count, hasLiked) {
+        async function handleLikeCard(likeId, event) {
+            if (event) event.stopPropagation();
+
+            let myLikes = JSON.parse(localStorage.getItem('myGalleryLikes')) || {};
+            
+            // Nếu đã thả tim rồi -> Thông báo nhẹ cho người dùng biết
+            if (myLikes[likeId]) {
+                alert("Bồ đã thả tim cho tác phẩm này rồi nhé! 💚");
+                return;
+            }
+
+            // 1. CẬP NHẬT GIAO DIỆN NGAY LẬP TỨC (Không cần chờ Firebase)
+            markHeartAsLiked(likeId);
+            myLikes[likeId] = true;
+            localStorage.setItem('myGalleryLikes', JSON.stringify(myLikes));
+
+            // Tăng tạm 1 số đếm trên màn hình cho bồ thấy liền
             const buttons = document.querySelectorAll(`[data-like-id="${likeId}"]`);
             buttons.forEach(btn => {
                 const countText = btn.querySelector('.like-count');
+                if (countText) {
+                    let currentCount = parseInt(countText.innerText) || 0;
+                    countText.innerText = currentCount + 1;
+                }
+            });
+
+            // 2. GỬI DỮ LIỆU LÊN FIREBASE FIRESTORE
+            try {
+                if (!window.db) {
+                    console.warn("Firebase chưa sẵn sàng, dữ liệu đã lưu tạm ở máy.");
+                    return;
+                }
+
+                const likeRef = window.fbDoc(window.db, "likes", likeId);
+                const likeSnap = await window.fbGetDoc(likeRef);
+
+                if (likeSnap.exists()) {
+                    await window.fbSetDoc(likeRef, { count: window.fbIncrement(1) }, { merge: true });
+                } else {
+                    await window.fbSetDoc(likeRef, { count: 1 });
+                }
+            } catch (err) {
+                console.error("Lỗi đồng bộ Firebase:", err);
+            }
+        }
+
+        function markHeartAsLiked(likeId) {
+            const buttons = document.querySelectorAll(`[data-like-id="${likeId}"]`);
+            buttons.forEach(btn => {
                 const heartIcon = btn.querySelector('i');
-                
-                if (countText) countText.innerText = count;
-                if (heartIcon && hasLiked) {
-                    heartIcon.className = "fas fa-heart"; 
+                if (heartIcon) {
+                    heartIcon.className = "fas fa-heart";
                     heartIcon.style.transform = "scale(1.2)";
                     btn.style.color = "#ef4444";
                 }
             });
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                let likesData = JSON.parse(localStorage.getItem('galleryLikes')) || {};
-                const allLikeButtons = document.querySelectorAll('[data-like-id]');
-                
-                allLikeButtons.forEach(btn => {
-                    const id = btn.getAttribute('data-like-id');
-                    const count = likesData[id] ? 1 : 0;
-                    updateLikeUI(id, count, likesData[id]);
+        function updateLikeCountUI(likeId, count) {
+            const buttons = document.querySelectorAll(`[data-like-id="${likeId}"]`);
+            buttons.forEach(btn => {
+                const countText = btn.querySelector('.like-count');
+                if (countText) countText.innerText = count;
+            });
+        }
+
+        function initFirebaseLikes() {
+            if (!window.db) {
+                setTimeout(initFirebaseLikes, 200);
+                return;
+            }
+
+            const myLikes = JSON.parse(localStorage.getItem('myGalleryLikes')) || {};
+            const allLikeIds = new Set();
+
+            document.querySelectorAll('[data-like-id]').forEach(btn => {
+                allLikeIds.add(btn.getAttribute('data-like-id'));
+            });
+
+            allLikeIds.forEach(likeId => {
+                if (myLikes[likeId]) {
+                    markHeartAsLiked(likeId);
+                }
+
+                const likeRef = window.fbDoc(window.db, "likes", likeId);
+                window.fbOnSnapshot(likeRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        const count = docSnap.data().count || 0;
+                        updateLikeCountUI(likeId, count);
+                    }
                 });
-            }, 100);
+            });
+        }
+
+        window.addEventListener("load", () => {
+            setTimeout(initFirebaseLikes, 300);
         });
-    </script>
+</script>
 
     <!-- ================= LIGHTBOX MODAL ================= -->
     <div id="customLightbox" class="lightbox-modal" onclick="closeLightbox()" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(2, 7, 5, 0.95); z-index: 9999; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s ease; backdrop-filter: blur(8px);">
